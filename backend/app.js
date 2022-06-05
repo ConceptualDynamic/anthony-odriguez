@@ -1,30 +1,24 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const sequelize = require('./database/database')
-const debug = require('debug')('express-api:server')
-
-const indexRouter = require('./routes/index');
-const Router = require('./routes/router');
-
+const bodyParser = require('body-parser');
+const router = require('./controllers/router')
+// This will be our application entry. We'll setup our server here.
+const http = require('http');
+// Set up the express app
 const app = express();
-
+// Log requests to the console.
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// Parse incoming requests data (https://github.com/expressjs/body-parser)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/', indexRouter);
-app.use('/router', Router);
-
-//  Start database connection
-sequelize.sync()
-  // eslint-disable-next-line no-console
-  .then(() => (console.log('Connected to database')))
-  .catch((reason) => {
-    // eslint-disable-next-line no-console
-    console.log('Error connecting to database')
-    debug(reason)
-  })
-
+app.use('/', router)
+// Setup a default catch-all route that sends back a welcome message in JSON format.
+app.get('*', (req, res) => res.status(200).send({
+  message: 'Welcome to the beginning of my app.',
+}));
+const port = parseInt(process.env.PORT, 10) || 8000;
+app.set('port', port);
+const server = http.createServer(app);
+server.listen(port);
 module.exports = app;

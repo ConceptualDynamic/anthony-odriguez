@@ -5,5 +5,4 @@ const clientsRouter = require('./clients/clients.router')
 //  Routes
 router.use('/clients', clientsRouter)
 
-
 module.exports = router
