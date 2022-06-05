@@ -1,0 +1,9 @@
+{
+  "development": {
+  "username": "root",
+    "password": "",
+    "database": "conceptual_dynamics",
+    "host": "localhost",
+    "dialect": "mysql"
+}
+}
