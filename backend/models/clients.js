@@ -65,4 +65,6 @@ Client.init({
   paranoid: true
 })
 
+await Client.sync();
+
 module.exports = Client
