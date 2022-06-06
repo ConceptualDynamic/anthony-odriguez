@@ -40,7 +40,7 @@ const update = async (req, res) => {
     await client.save()
     return responseOk(res, { message: 'Client updated successfully' })
   } catch (e) {
-    return responseServerError(res, { message: 'Error deleting client' })
+    return responseServerError(res, { message: 'Error updating client' })
   }
 }
 
