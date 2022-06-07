@@ -1,9 +1,6 @@
 <template>
-  <section id="products-view">
-    <div>
-      Esto son los productos
-    </div>
-  </section>
+  <v-container>
+  </v-container>
 </template>
 
 <script>
