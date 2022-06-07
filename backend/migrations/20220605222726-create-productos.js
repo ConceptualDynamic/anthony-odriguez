@@ -12,18 +12,22 @@ module.exports = {
       cantidad: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        default: 0
+        default: 0,
+        require: true,
       },
       nombre: {
         allowNull: false,
+        require: true,
         type: DataTypes.STRING
       },
       descripcion: {
         type: DataTypes.TEXT,
+        require: true,
         allowNull:false
       },
       precio: {
         type: DataTypes.DECIMAL,
+        require: true,
         allowNull: false
       },
       status: {
@@ -31,7 +35,7 @@ module.exports = {
         type: DataTypes.BOOLEAN
       },
       imagen: {
-        type: Sequelize.STRING
+        type: DataTypes.BLOB
       },
       createdAt: {
         allowNull: false,

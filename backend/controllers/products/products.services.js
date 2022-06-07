@@ -11,7 +11,10 @@ const getAll = async (req, res) => {
 }
 
 const create = async (req, res) => {
-  const { cantidad, nombre, descripcion, precio, status, imagen } = req.body
+  let { cantidad, nombre, descripcion, precio, status, imagen } = req.body
+  if (!status) {
+    status = true
+  }
   try {
     const product = await Product.create({ cantidad, nombre, descripcion, precio, status, imagen })
     return responseCreated(res, product)

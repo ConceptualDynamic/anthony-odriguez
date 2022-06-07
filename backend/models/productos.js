@@ -17,25 +17,29 @@ module.exports = (sequelize, DataTypes) => {
     cantidad: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      require: true,
       default: 0
     },
     nombre: {
       allowNull: false,
+      require: true,
       type: DataTypes.STRING
     },
     descripcion: {
       type: DataTypes.TEXT,
+      require: true,
       allowNull:false
     },
     precio: {
       type: DataTypes.DECIMAL,
+      require: true,
       allowNull: false
     },
     status: {
       default: false,
       type: DataTypes.BOOLEAN
     },
-    imagen: DataTypes.STRING
+    imagen: DataTypes.BLOB
   }, {
     sequelize,
     modelName: 'productos',
