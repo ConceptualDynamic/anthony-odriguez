@@ -13,21 +13,17 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         default: 0,
-        require: true,
       },
       nombre: {
         allowNull: false,
-        require: true,
         type: DataTypes.STRING
       },
       descripcion: {
         type: DataTypes.TEXT,
-        require: true,
         allowNull:false
       },
       precio: {
         type: DataTypes.DECIMAL,
-        require: true,
         allowNull: false
       },
       status: {

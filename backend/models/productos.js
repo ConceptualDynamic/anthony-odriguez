@@ -14,26 +14,40 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   productos.init({
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     cantidad: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      require: true,
-      default: 0
+      default: 0,
+      validate: {
+        notEmpty: true
+      }
     },
     nombre: {
       allowNull: false,
-      require: true,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
     },
     descripcion: {
       type: DataTypes.TEXT,
-      require: true,
-      allowNull:false
+      allowNull:false,
+      validate: {
+        notEmpty: true
+      }
     },
     precio: {
       type: DataTypes.DECIMAL,
-      require: true,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     },
     status: {
       default: false,
