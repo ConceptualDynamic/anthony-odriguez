@@ -1,25 +1,21 @@
 <template>
   <v-row>
-    <v-btn
-        elevation="4"
-        @click="onOpenFormModal"
-        color="primary"
-    >Crear Producto</v-btn>
     <!--  Create modal  -->
     <v-dialog
-        v-model="formModal.show"
+        v-model="modelValue"
         max-width="700px"
     @click:outside="clearModal">
       <v-card>
-        <v-card-title> {{ formModal.title }}</v-card-title>
+<!--   Titulo del modal     -->
+        <v-card-title class="pa-4 flex justify-center"> {{ modelTitle }}</v-card-title>
         <v-card-text>
-          <v-form ref="productForm" v-model="formModal.isValid">
+          <v-form ref="productForm">
             <v-row>
     <!--    Name input     -->
               <v-col
               cols="6">
                 <v-text-field
-                v-model="currentProduct.nombre"
+                v-model="modelProduct.nombre"
                 label="Nombre"
                 name="product-nombre"
                 background-color="#F9F9F9"
@@ -29,7 +25,7 @@
     <!--      stock input        -->
               <v-col cols="3">
                 <v-text-field
-                    v-model.number="currentProduct.cantidad"
+                    v-model.number="modelProduct.cantidad"
                     name="product-cantidad"
                     type="number"
                     min="1"
@@ -43,7 +39,7 @@
     <!--      Precio input        -->
               <v-col cols="3">
                 <v-text-field
-                    v-model.number="currentProduct.precio"
+                    v-model.number="modelProduct.precio"
                     name="product-precio"
                     type="number"
                     min="0"
@@ -55,18 +51,20 @@
                     background-color="#F9F9F9"
                     required/>
               </v-col>
+    <!--      Descripcion input        -->
               <v-col cols="12">
                 <v-textarea
-                    v-model="currentProduct.descripcion"
+                    v-model="modelProduct.descripcion"
                     name="product-descripcion"
                     filled
                     background-color="#F9F9F9"
                     label="Descripcion del producto"
                     required/>
               </v-col>
+<!--      Image input        -->
               <v-col cols="6">
                 <v-file-input
-                    v-model="currentProduct.imagen"
+                    v-model="modelProduct.imagen"
                     label="File input"
                     filled
                     prepend-icon="mdi-camera"
@@ -79,17 +77,15 @@
           <v-spacer/>
           <v-btn
               text
-              :disabled="formModal.loading"
               @click="clearModal">
             Cancelar
           </v-btn>
           <v-btn
-              v-if="currentProduct"
+              v-if="modelProduct"
               depressed
               color="primary"
-              :loading="formModal.loading"
               @click="onFormModalSubmit">
-            {{ currentProduct.id ? 'Editar' : 'Crear' }}
+            {{ modelProduct.id ? 'Editar' : 'Crear' }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -101,26 +97,51 @@
 
 export default {
   name: "formModal",
-  data: () => ({
-    formModal: {
-      title: "",
-      show: false
+  props: {
+    value: {
+      type: Boolean,
+      required: true
     },
-    currentProduct: {}
-  }),
+    title: {
+      type: String,
+      required: true
+    },
+    currentProduct: {
+      type: Object
+    }
+  },
+  computed: {
+    modelValue: {
+      get() {
+        return this.value
+      },
+      set(value) {
+        this.$emit('update', value)
+      }
+    },
+    modelTitle: {
+      get() {
+        return this.title
+      },
+      set(title) {
+        this.$emit('update', title)
+      }
+    },
+    modelProduct: {
+      get() {
+        return this.currentProduct
+      },
+      set(currentProduct) {
+        this.$emit('update', currentProduct)
+      }
+    }
+  },
   methods: {
-    onOpenFormModal() {
-      this.formModal.title = "Crear nuevo producto"
-      this.formModal.show = true
-    },
-    clearModal() {
-      this.formModal.title = ""
-      this.currentProduct = {}
-      this.formModal.show = false
+    async clearModal() {
+      await this.$emit("cancelFormModal")
     },
     async onFormModalSubmit() {
-      await this.$emit('createProduct', this.currentProduct)
-      this.clearModal()
+      await this.currentProduct.id ? this.$emit('editProduct', this.currentProduct) : this.$emit('createProduct', this.currentProduct)
     }
   }
 }
