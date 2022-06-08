@@ -1,0 +1,8 @@
+/backend/node_modules/
+/backend/package-lock.json
+/.idea/anthony-rodriguez.iml
+/.idea/.gitignore
+/.idea/git_toolbox_prj.xml
+/.idea/jsLibraryMappings.xml
+/.idea/modules.xml
+/.idea/vcs.xml
